@@ -1,7 +1,9 @@
 package com.cartoonishvillain.eeriehauntings.entity;
 
+import com.cartoonishvillain.eeriehauntings.EerieHauntings;
 import com.cartoonishvillain.eeriehauntings.Register;
 import com.cartoonishvillain.eeriehauntings.client.ClientInitializer;
+import com.cartoonishvillain.eeriehauntings.components.PlayerComponent;
 import com.cartoonishvillain.eeriehauntings.packets.spawning.EntitySpawnPacket;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
@@ -25,6 +27,8 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 
 import java.util.UUID;
+
+import static com.cartoonishvillain.eeriehauntings.components.ComponentStarter.PLAYERCOMPONENTINSTANCE;
 
 
 public class SoulBallProjectile extends ThrowableItemProjectile {
@@ -60,10 +64,8 @@ public class SoulBallProjectile extends ThrowableItemProjectile {
         super.onHitEntity(p_213868_1_);
         if (p_213868_1_.getEntity() instanceof Player && !p_213868_1_.getEntity().level.isClientSide){
             Player player = (Player) p_213868_1_.getEntity();
-            //TODO: Component conversion
-//            player.getCapability(PlayerCapability.INSTANCE).ifPresent(h->{
-//                h.addHauntChance(EerieHauntings.serverConfig.SOULBALLCHANCEADD.get().floatValue());
-//            });
+            PlayerComponent h = PLAYERCOMPONENTINSTANCE.get(player);
+                h.addHauntChance((float) EerieHauntings.serverConfig.config.hauntChanceAddedBySoulBallHit);
         } if(p_213868_1_.getEntity() instanceof LivingEntity && !p_213868_1_.getEntity().level.isClientSide){
             ((LivingEntity) p_213868_1_.getEntity()).addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 30*20, 0));
             p_213868_1_.getEntity().hurt(DamageSource.thrown(this, this.getOwner()), 0);

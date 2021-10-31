@@ -7,8 +7,7 @@ import net.minecraft.nbt.CompoundTag;
 public class PlayerComponent implements ComponentV3 {
     protected boolean haunted = false;
     protected boolean anger = false;
-    //todo: EerieHauntings.serverConfig.NORMALHAUNTCHANCE.get().floatValue();
-    protected float hauntChance = 5;
+    protected float hauntChance = (float) EerieHauntings.serverConfig.config.baseHauntChance;
     protected int ghostType = 0;
     protected int protectedDays = 0;
     protected int hauntTicks = 0;

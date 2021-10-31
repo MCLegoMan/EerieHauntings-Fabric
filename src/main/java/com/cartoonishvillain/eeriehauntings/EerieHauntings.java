@@ -1,6 +1,10 @@
 package com.cartoonishvillain.eeriehauntings;
 
+import com.cartoonishvillain.eeriehauntings.components.HauntedWorker;
 import com.cartoonishvillain.eeriehauntings.components.WorldComponet;
+import com.cartoonishvillain.eeriehauntings.config.EerieConfig;
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.world.WorldTickCallback;
@@ -27,13 +31,16 @@ public class EerieHauntings implements ModInitializer {
 	// This logger is used to write text to the console and the log file.
 	// It is considered best practice to use your mod id as the logger's name.
 	// That way, it's clear which mod wrote info, warnings, and errors.
-	public static final Logger LOGGER = LogManager.getLogger("modid");
+	public static final Logger LOGGER = LogManager.getLogger("eeriehauntings");
+	public static EerieConfig serverConfig;
 
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
+		AutoConfig.register(EerieConfig.class, GsonConfigSerializer::new);
+		serverConfig = AutoConfig.getConfigHolder(EerieConfig.class).getConfig();
 
 		Register.init();
 		ServerTickEvents.END_SERVER_TICK.register(WorldTimeWatch.getInstance());
@@ -57,10 +64,10 @@ public class EerieHauntings implements ModInitializer {
 			if (level != null) {
 				if (WORLDCOMPONENTINSTANCE.get(level).isNight() && level.isDay()) {
 					WORLDCOMPONENTINSTANCE.get(level).setisNight(false);
-					//TODO: RESETGHOSTANGERS
+					HauntedWorker.ResetGhostAngers(server);
 				} else if (!WORLDCOMPONENTINSTANCE.get(level).isNight() && !level.isDay()) {
 					WORLDCOMPONENTINSTANCE.get(level).setisNight(true);
-					//TODO: HAUNTCHECK
+					HauntedWorker.HauntCheck(server);
 				}
 			}
 		}

@@ -4,6 +4,7 @@
   "package": "com.cartoonishvillain.eeriehauntings.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
+    "PlayerTickMixin"
   ],
   "client": [
 
