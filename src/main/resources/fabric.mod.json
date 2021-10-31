@@ -9,17 +9,20 @@
     "Me!"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "",
+    "sources": ""
   },
 
   "license": "MIT",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/eeriehauntings/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
       "com.cartoonishvillain.eeriehauntings.EerieHauntings"
+    ],
+    "client": [
+      "com.cartoonishvillain.eeriehauntings.client.ClientInitializer"
     ]
   },
   "mixins": [
