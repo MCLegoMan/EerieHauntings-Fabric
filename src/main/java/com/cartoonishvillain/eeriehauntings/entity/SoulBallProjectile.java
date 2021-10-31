@@ -3,7 +3,14 @@ package com.cartoonishvillain.eeriehauntings.entity;
 import com.cartoonishvillain.eeriehauntings.Register;
 import com.cartoonishvillain.eeriehauntings.client.ClientInitializer;
 import com.cartoonishvillain.eeriehauntings.packets.spawning.EntitySpawnPacket;
+import io.netty.buffer.Unpooled;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.impl.networking.ServerSidePacketRegistryImpl;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -17,14 +24,27 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 
+import java.util.UUID;
+
 
 public class SoulBallProjectile extends ThrowableItemProjectile {
+    public static final ResourceLocation SPAWNPACKET1 = new ResourceLocation("eeriehauntings:spawn_packet1");
+
     public SoulBallProjectile(EntityType<? extends ThrowableItemProjectile> p_i50157_1_, LivingEntity p_i50157_2_, Level p_i50157_3_) {
         super(p_i50157_1_, p_i50157_2_, p_i50157_3_);
     }
 
     public SoulBallProjectile(EntityType<SoulBallProjectile> soulBallProjectileEntityType, Level world) {
         super(soulBallProjectileEntityType, world);
+    }
+
+    @Environment(EnvType.CLIENT)
+    public SoulBallProjectile(Level level, double x, double y, double z, int id, UUID uuid){
+        super(Register.SOULLBALLENTITYTYPE, level);
+        setPos(x, y, z);
+        setId(id);
+        setUUID(uuid);
+
     }
 
     @Override
@@ -57,9 +77,9 @@ public class SoulBallProjectile extends ThrowableItemProjectile {
     }
 
 
-    
+
     @Override
     public Packet<?> getAddEntityPacket() {
-        return EntitySpawnPacket.create(this, ClientInitializer.SPAWNPACKET);
+        return new ClientboundAddEntityPacket(this);
     }
 }
