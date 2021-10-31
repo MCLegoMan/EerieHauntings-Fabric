@@ -3,6 +3,13 @@
   "id": "eeriehauntings",
   "version": "${version}",
 
+  "custom": {
+    "cardinal-components": [
+      "eeriehauntings:hauntdata",
+      "eeriehauntings:worldtracker"
+    ]
+  },
+
   "name": "Eerie Hauntings",
   "description": "Eerie Hauntings adds spirits that haunt the player everywhere they go! A player is more likely to be haunted when they kill!",
   "authors": [
@@ -23,6 +30,12 @@
     ],
     "client": [
       "com.cartoonishvillain.eeriehauntings.client.ClientInitializer"
+    ],
+    "cardinal-components-entity": [
+      "com.cartoonishvillain.eeriehauntings.components.ComponentStarter"
+    ],
+    "cardinal-components-world": [
+      "com.cartoonishvillain.eeriehauntings.components.ComponentStarter"
     ]
   },
   "mixins": [
