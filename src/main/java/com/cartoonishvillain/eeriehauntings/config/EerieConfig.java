@@ -26,7 +26,7 @@ public class EerieConfig implements ConfigData {
         public int maximumCooldownInTicksForEvents = 700;
         public int boonPotencyAdder = 0;
 
-        public boolean easyExorcismMode = true;
+        public boolean easyExorcismMode = false;
         public boolean doSpiritsGetAngry = true;
         public boolean enableBoons = true;
         public int chalkDurationInDays = 10;

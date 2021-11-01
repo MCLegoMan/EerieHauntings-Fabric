@@ -1,6 +1,7 @@
 package com.cartoonishvillain.eeriehauntings.items;
 
 import com.cartoonishvillain.eeriehauntings.EerieHauntings;
+import com.cartoonishvillain.eeriehauntings.components.HauntedWorker;
 import com.cartoonishvillain.eeriehauntings.components.PlayerComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -34,6 +35,7 @@ public class Offering extends Item {
                 PlayerComponent h = PLAYERCOMPONENTINSTANCE.get(p_41433_);
                     if(h.getIsHaunted() && !h.getAnger()){
                         p_41433_.getMainHandItem().shrink(1);
+                        HauntedWorker.boonExpelGhost((ServerPlayer) p_41433_);
                     } else if(h.getIsHaunted() && h.getAnger()) {
                         p_41433_.getMainHandItem().shrink(1);
                         p_41433_.displayClientMessage(new TranslatableComponent("boon.eeriehauntings.deny").withStyle(ChatFormatting.RED), false);

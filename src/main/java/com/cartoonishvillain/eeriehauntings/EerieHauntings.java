@@ -1,11 +1,13 @@
 package com.cartoonishvillain.eeriehauntings;
 
+import com.cartoonishvillain.eeriehauntings.commands.*;
 import com.cartoonishvillain.eeriehauntings.components.HauntedWorker;
 import com.cartoonishvillain.eeriehauntings.components.WorldComponet;
 import com.cartoonishvillain.eeriehauntings.config.EerieConfig;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.world.WorldTickCallback;
 import net.minecraft.network.chat.ChatType;
@@ -44,6 +46,15 @@ public class EerieHauntings implements ModInitializer {
 
 		Register.init();
 		ServerTickEvents.END_SERVER_TICK.register(WorldTimeWatch.getInstance());
+
+		CommandRegistrationCallback.EVENT.register(((dispatcher, dedicated) -> {
+			ForceHauntCommand.register(dispatcher);
+			HelpCommand.register(dispatcher);
+			RemoveHauntCommand.register(dispatcher);
+			SetHauntChance.register(dispatcher);
+			SetProtectionDays.register(dispatcher);
+			ToggleAngerCommand.register(dispatcher);
+		}));
 	}
 
 

@@ -10,6 +10,7 @@ import com.cartoonishvillain.eeriehauntings.items.rewarditems.SoulBall;
 import com.cartoonishvillain.eeriehauntings.items.rewarditems.UnearthlyDagger;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.core.Registry;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 
@@ -68,6 +69,8 @@ public class Register {
 
         Registry.register(Registry.ITEM, new ResourceLocation("eeriehauntings:unearthly_dagger"), UNEARTHLYDAGGER);
         Registry.register(Registry.ITEM, new ResourceLocation("eeriehauntings:soulball"), SOULBALL);
+
+
     }
 
 

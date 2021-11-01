@@ -235,7 +235,7 @@ public class HauntedWorker {
                 int rand = player.getRandom().nextInt(6);
                 switch (rand) {
                     case 0 -> {
-                        player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, Integer.MAX_VALUE, 1 + EerieHauntings.serverConfig.config.boonPotencyAdder, false, false));
+                        player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, Integer.MAX_VALUE,  EerieHauntings.serverConfig.config.boonPotencyAdder, false, false));
                         player.displayClientMessage(new TranslatableComponent("boon.eeriehauntings.speed").withStyle(ChatFormatting.AQUA), false);
                     }
                     case 1 -> {
@@ -243,7 +243,7 @@ public class HauntedWorker {
                         player.displayClientMessage(new TranslatableComponent("boon.eeriehauntings.haste").withStyle(ChatFormatting.YELLOW), false);
                     }
                     case 2 -> {
-                        player.addEffect(new MobEffectInstance(MobEffects.JUMP, Integer.MAX_VALUE, EerieHauntings.serverConfig.config.boonPotencyAdder, false, false));
+                        player.addEffect(new MobEffectInstance(MobEffects.JUMP, Integer.MAX_VALUE, 1 + EerieHauntings.serverConfig.config.boonPotencyAdder, false, false));
                         player.displayClientMessage(new TranslatableComponent("boon.eeriehauntings.jump").withStyle(ChatFormatting.GREEN), false);
                     }
                     case 3 -> {
