@@ -44,6 +44,8 @@ public class CalciteChalk extends Item {
     @Override
     public void appendHoverText(ItemStack p_41421_, @Nullable Level p_41422_, List<Component> p_41423_, TooltipFlag p_41424_) {
         super.appendHoverText(p_41421_, p_41422_, p_41423_, p_41424_);
-        p_41423_.add(new TranslatableComponent("info.eeriehauntings.calciteexplain", EerieHauntings.serverConfig.config.chalkDurationInDays).withStyle(ChatFormatting.GOLD));
+        if(p_41422_ != null && !p_41422_.isClientSide) {
+            p_41423_.add(new TranslatableComponent("info.eeriehauntings.calciteexplain", EerieHauntings.serverConfig.config.chalkDurationInDays).withStyle(ChatFormatting.GOLD));
+        }
     }
 }

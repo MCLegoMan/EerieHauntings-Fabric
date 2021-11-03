@@ -50,9 +50,14 @@ public class Offering extends Item {
     @Override
     public void appendHoverText(ItemStack p_41421_, @Nullable Level p_41422_, List<Component> p_41423_, TooltipFlag p_41424_) {
         super.appendHoverText(p_41421_, p_41422_, p_41423_, p_41424_);
-        if (EerieHauntings.serverConfig.config.enableBoons)
-        p_41423_.add(new TranslatableComponent("info.eeriehauntings.offering").withStyle(ChatFormatting.GOLD));
-        else
-            p_41423_.add(new TranslatableComponent("info.eeriehauntings.offeringdisabled").withStyle(ChatFormatting.GRAY));
+        if(p_41422_ != null && !p_41422_.isClientSide) {
+            if (EerieHauntings.serverConfig.config.enableBoons) {
+                p_41423_.add(new TranslatableComponent("info.eeriehauntings.offering").withStyle(ChatFormatting.GOLD));
+                p_41423_.add(new TranslatableComponent("info.eeriehauntings.offering2").withStyle(ChatFormatting.GOLD));
+            } else {
+                p_41423_.add(new TranslatableComponent("info.eeriehauntings.offeringdisabled").withStyle(ChatFormatting.GRAY));
+                p_41423_.add(new TranslatableComponent("info.eeriehauntings.offeringdisabled2").withStyle(ChatFormatting.GRAY));
+            }
+        }
     }
 }

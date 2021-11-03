@@ -2,14 +2,9 @@ package com.cartoonishvillain.eeriehauntings.entity;
 
 import com.cartoonishvillain.eeriehauntings.EerieHauntings;
 import com.cartoonishvillain.eeriehauntings.Register;
-import com.cartoonishvillain.eeriehauntings.client.ClientInitializer;
 import com.cartoonishvillain.eeriehauntings.components.PlayerComponent;
-import com.cartoonishvillain.eeriehauntings.packets.spawning.EntitySpawnPacket;
-import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.impl.networking.ServerSidePacketRegistryImpl;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.resources.ResourceLocation;

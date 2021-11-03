@@ -90,6 +90,7 @@ public class GhostlyInstrument extends Item {
             case "amplified_ghostly_instrument":{
                 p_41423_.add(new TranslatableComponent("amplifiedinstrument.eeriehauntings.infosound").withStyle(ChatFormatting.BLUE));
                 p_41423_.add(new TranslatableComponent("amplifiedinstrument.eeriehauntings.infocrouch").withStyle(ChatFormatting.RED));
+                p_41423_.add(new TranslatableComponent("amplifiedinstrument.eeriehauntings.infocrouch2").withStyle(ChatFormatting.RED));
                 break;
             }
             default:{
