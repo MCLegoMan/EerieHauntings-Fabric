@@ -3,7 +3,7 @@ package com.cartoonishvillain.eeriehauntings.components;
 import dev.onyxstudios.cca.api.v3.component.ComponentV3;
 import net.minecraft.nbt.CompoundTag;
 
-public class WorldComponet implements ComponentV3 {
+public class WorldComponent implements ComponentV3 {
     protected boolean night = false;
     @Override
     public void readFromNbt(CompoundTag tag) {

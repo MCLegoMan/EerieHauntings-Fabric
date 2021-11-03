@@ -16,11 +16,20 @@ import net.minecraft.world.entity.player.Player;
 
 public class ClientInitializer implements ClientModInitializer {
 
+    public static boolean boonEnabled;
+    public static boolean easyModeEnabled;
+    public static int chalkDaysProtected;
+    public static float soulBallChance;
+
 
     @Override
     public void onInitializeClient() {
         EntityRendererRegistry.register(Register.SOULLBALLENTITYTYPE, (ThrownItemRenderer::new));
         registerPackets();
+        chalkDaysProtected = EerieHauntings.serverConfig.config.chalkDurationInDays;
+        soulBallChance = (float) EerieHauntings.serverConfig.config.hauntChanceAddedBySoulBallHit;
+        easyModeEnabled  = EerieHauntings.serverConfig.config.easyExorcismMode;
+        boonEnabled  = EerieHauntings.serverConfig.config.enableBoons;
     }
 
 
@@ -67,6 +76,13 @@ public class ClientInitializer implements ClientModInitializer {
                     entity.level.playSound((Player) entity, entity.getX(), entity.getY(), entity.getZ(), Register.STRONGSTRENGTHSOUNDS, SoundSource.MASTER, 1.5f, randomPitch);
                 }
             });
+        });
+
+        ClientPlayNetworking.registerGlobalReceiver(new ResourceLocation("eeriehauntings:configupdate"), (client, handler, buf, responseSender) -> {
+            chalkDaysProtected = buf.readInt();
+            soulBallChance = buf.readFloat();
+            boonEnabled = buf.readBoolean();
+            easyModeEnabled = buf.readBoolean();
         });
 
     }

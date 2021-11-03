@@ -2,28 +2,28 @@ package com.cartoonishvillain.eeriehauntings;
 
 import com.cartoonishvillain.eeriehauntings.commands.*;
 import com.cartoonishvillain.eeriehauntings.components.HauntedWorker;
-import com.cartoonishvillain.eeriehauntings.components.WorldComponet;
 import com.cartoonishvillain.eeriehauntings.config.EerieConfig;
+import com.cartoonishvillain.eeriehauntings.networking.ConfigPacket;
+import io.netty.buffer.Unpooled;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.fabricmc.fabric.api.event.world.WorldTickCallback;
-import net.minecraft.network.chat.ChatType;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.fabricmc.fabric.api.networking.v1.PacketSender;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.level.block.BedBlock;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import static com.cartoonishvillain.eeriehauntings.components.ComponentStarter.WORLDCOMPONENTINSTANCE;
 
@@ -55,6 +55,18 @@ public class EerieHauntings implements ModInitializer {
 			SetProtectionDays.register(dispatcher);
 			ToggleAngerCommand.register(dispatcher);
 		}));
+
+		ServerPlayConnectionEvents.JOIN.register(JoinListener.getInstance());
+	}
+
+	public static class JoinListener implements ServerPlayConnectionEvents.Join{
+		private static final JoinListener INSTANCE = new JoinListener();
+		@Override
+		public void onPlayReady(ServerGamePacketListenerImpl handler, PacketSender sender, MinecraftServer server) {
+			ConfigPacket.send(handler.player, new FriendlyByteBuf(Unpooled.buffer()));
+		}
+		public static JoinListener getInstance() {return INSTANCE;}
+
 	}
 
 
