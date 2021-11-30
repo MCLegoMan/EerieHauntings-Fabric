@@ -21,7 +21,7 @@ import static com.cartoonishvillain.eeriehauntings.Register.UNEARTHLYSHARD;
 @Mixin(Item.class)
 public class ItemToolTipMixin {
     @Inject(at = @At("TAIL"), method = "appendHoverText")
-    public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> list, TooltipFlag tooltipFlag, CallbackInfo info) {
+    public void EerieappendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> list, TooltipFlag tooltipFlag, CallbackInfo info) {
         if(itemStack.getItem().equals(UNEARTHLYSHARD)){
             list.add(new TranslatableComponent("info.eeriehauntings.shard").withStyle(ChatFormatting.GOLD));
             list.add(new TranslatableComponent("info.eeriehauntings.shardgain").withStyle(ChatFormatting.RED));
