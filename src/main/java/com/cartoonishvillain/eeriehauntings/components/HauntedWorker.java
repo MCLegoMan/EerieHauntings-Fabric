@@ -4,9 +4,12 @@ import com.cartoonishvillain.eeriehauntings.EerieHauntings;
 import com.cartoonishvillain.eeriehauntings.Register;
 import com.cartoonishvillain.eeriehauntings.networking.LightClientSoundPacket;
 import com.cartoonishvillain.eeriehauntings.networking.MediumClientSoundPacket;
+import com.cartoonishvillain.eeriehauntings.networking.ShaderPacket;
 import com.cartoonishvillain.eeriehauntings.networking.StrongClientSoundPacket;
 import io.netty.buffer.Unpooled;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.ChatType;
@@ -33,59 +36,70 @@ import static com.cartoonishvillain.eeriehauntings.components.ComponentStarter.P
 
 public class HauntedWorker {
 
-    public static void tickHaunting(ServerPlayer player){
-        PlayerComponent h = PLAYERCOMPONENTINSTANCE.get(player);
-        if(ValidPlayer(player)) {
-            if (h.getIsHaunted() && h.checkHauntActionTicks()) {
-                if (player.level.isDay()) {
-                    lightEffect( player);
-                } else {
-                    if (!h.getAnger()) {
-                        int chance = player.getRandom().nextInt(10);
-                        if (chance <= 5) {
-                            lightEffect(player);
-                        } else if (chance <= 7) {
-                            moderateEffect(player, true);
-                        } else if (chance <= 8) {
-                            lightEffect(player);
-                            moderateEffect( player, true);
-                        } else {
-                            strongEffect(player, true);
+    public static void tickHaunting(Player player){
+        if(player instanceof ServerPlayer) {
+            PlayerComponent h = PLAYERCOMPONENTINSTANCE.get(player);
+            if (ValidPlayer(player)) {
+                if (h.getIsHaunted() && h.checkHauntActionTicks()) {
+                    if (player.level.isDay()) {
+                        lightEffect((ServerPlayer) player);
+                    } else {
+                        if (!h.getAnger()) {
+                            int chance = player.getRandom().nextInt(10);
+                            if (chance <= 5) {
+                                lightEffect((ServerPlayer) player);
+                            } else if (chance <= 7) {
+                                moderateEffect((ServerPlayer) player, true);
+                            } else if (chance <= 8) {
+                                lightEffect((ServerPlayer) player);
+                                moderateEffect((ServerPlayer) player, true);
+                            } else {
+                                strongEffect((ServerPlayer) player, true);
+                            }
+
                         }
 
-                    }
-
-                    //If angered, it'll lean towards stronger events.
-                    else {
-                        int chance = player.getRandom().nextInt(10);
-                        if (chance <= 2) {
-                            lightEffect(player);
-                        } else if (chance <= 5) {
-                            moderateEffect(player, true);
-                        } else if (chance <= 7) {
-                            lightEffect(player);
-                            moderateEffect(player, true);
-                        } else {
-                            strongEffect(player, true);
+                        //If angered, it'll lean towards stronger events.
+                        else {
+                            int chance = player.getRandom().nextInt(10);
+                            if (chance <= 2) {
+                                lightEffect((ServerPlayer) player);
+                            } else if (chance <= 5) {
+                                moderateEffect((ServerPlayer) player, true);
+                            } else if (chance <= 7) {
+                                lightEffect((ServerPlayer) player);
+                                moderateEffect((ServerPlayer) player, true);
+                            } else {
+                                strongEffect((ServerPlayer) player, true);
+                            }
                         }
                     }
-                }
-                h.setHauntActionTicks(player.getRandom().nextInt(EerieHauntings.serverConfig.config.maximumCooldownInTicksForEvents - EerieHauntings.serverConfig.config.minimumCooldownInTicksForEvents) + EerieHauntings.serverConfig.config.minimumCooldownInTicksForEvents);
+                    h.setHauntActionTicks(player.getRandom().nextInt(EerieHauntings.serverConfig.config.maximumCooldownInTicksForEvents - EerieHauntings.serverConfig.config.minimumCooldownInTicksForEvents) + EerieHauntings.serverConfig.config.minimumCooldownInTicksForEvents);
 
-                if (player.getMainHandItem().getItem().equals(Register.OLDRADIO) && h.getGhostType() != 1 && h.getGhostType() != 0) {
-                    player.getCooldowns().addCooldown(Register.OLDRADIO, 100);
-                    player.level.playSound(null, player.getOnPos(), Register.RADIOSOUND, SoundSource.MASTER, 1, 1);
-                    player.displayClientMessage(Component.translatable("item.eeriehauntings.radio").withStyle(ChatFormatting.GOLD), true);
-                } else if (player.getMainHandItem().getItem().equals(Register.EMFCOUNTER) && h.getGhostType() != 2 && h.getGhostType() != 0) {
-                    player.getCooldowns().addCooldown(Register.EMFCOUNTER, 100);
-                    player.level.playSound(null, player.getOnPos(), Register.EMFCOUNTERSOUNDS, SoundSource.MASTER, 1, 1);
-                    player.displayClientMessage(Component.translatable("item.eeriehauntings.emf").withStyle(ChatFormatting.GOLD), true);
-                }
+                    if (player.getMainHandItem().getItem().equals(Register.OLDRADIO) && h.getGhostType() != 1 && h.getGhostType() != 0) {
+                        player.getCooldowns().addCooldown(Register.OLDRADIO, 100);
+                        player.level.playSound(null, player.getOnPos(), Register.RADIOSOUND, SoundSource.MASTER, 1, 1);
+                        player.displayClientMessage(Component.translatable("item.eeriehauntings.radio").withStyle(ChatFormatting.GOLD), true);
+                    } else if (player.getMainHandItem().getItem().equals(Register.EMFCOUNTER) && h.getGhostType() != 2 && h.getGhostType() != 0) {
+                        player.getCooldowns().addCooldown(Register.EMFCOUNTER, 100);
+                        player.level.playSound(null, player.getOnPos(), Register.EMFCOUNTERSOUNDS, SoundSource.MASTER, 1, 1);
+                        player.displayClientMessage(Component.translatable("item.eeriehauntings.emf").withStyle(ChatFormatting.GOLD), true);
+                    }
 
+                }
+            }
+            if (!h.getIsHaunted()) h.setHauntActionTicks(0);
+        } else if (player instanceof LocalPlayer) {
+            PlayerComponent h = PLAYERCOMPONENTINSTANCE.get(player);
+            if(h.getVisualEffectTime() > 0) {
+                h.setVisualEffectTime(h.getVisualEffectTime() - 1);
+                if((h.getVisualEffectTime() == 0 || !ValidPlayer(player)) && player.level.isClientSide()) {
+                    //if the ticker reaches 0, remove the effect.
+                    Minecraft.getInstance().gameRenderer.shutdownEffect();
+                    h.setEffectID(0);
+                }
             }
         }
-        if(!h.getIsHaunted()) h.setHauntActionTicks(0);
-
     }
 
     public static void HauntCheck(MinecraftServer server){
@@ -173,6 +187,7 @@ public class HauntedWorker {
                     PlayerComponent h = PLAYERCOMPONENTINSTANCE.get(player);
                         h.setEffectID(1);
                         h.setVisualEffectTime(200);
+                    ShaderPacket.encodeAndSend(player, new FriendlyByteBuf(Unpooled.buffer()), player.getId(), (short) 200, (short) 1);
 
 //                player.displayClientMessage(Component.translatable()("ghost.stronglevitate.alert"), false);
                 }
@@ -181,6 +196,8 @@ public class HauntedWorker {
                     PlayerComponent h = PLAYERCOMPONENTINSTANCE.get(player);
                         h.setEffectID(3);
                         h.setVisualEffectTime(350);
+                    ShaderPacket.encodeAndSend(player, new FriendlyByteBuf(Unpooled.buffer()), player.getId(), (short) 350, (short) 3);
+
 
 //                player.displayClientMessage(Component.translatable()("ghost.strongconfusion.alert"), false);
                 }
@@ -189,6 +206,7 @@ public class HauntedWorker {
                     PlayerComponent h = PLAYERCOMPONENTINSTANCE.get(player);
                         h.setEffectID(2);
                         h.setVisualEffectTime(200);
+                    ShaderPacket.encodeAndSend(player, new FriendlyByteBuf(Unpooled.buffer()), player.getId(), (short) 200, (short) 2);
 
 //                player.displayClientMessage(Component.translatable()("ghost.stronghunger.alert"), false);
                 }

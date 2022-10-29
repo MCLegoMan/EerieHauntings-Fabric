@@ -2,6 +2,8 @@ package com.cartoonishvillain.eeriehauntings.client;
 
 import com.cartoonishvillain.eeriehauntings.EerieHauntings;
 import com.cartoonishvillain.eeriehauntings.Register;
+import com.cartoonishvillain.eeriehauntings.components.PlayerComponent;
+import com.cartoonishvillain.eeriehauntings.mixin.EerieRendererAccessor;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -13,6 +15,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+
+import static com.cartoonishvillain.eeriehauntings.components.ComponentStarter.PLAYERCOMPONENTINSTANCE;
 
 public class ClientInitializer implements ClientModInitializer {
 
@@ -78,6 +82,28 @@ public class ClientInitializer implements ClientModInitializer {
             });
         });
 
+        ClientPlayNetworking.registerGlobalReceiver(new ResourceLocation("eeriehauntings:shaderpacket"), (client, handler, buf, responseSender) -> {
+            int ID = buf.readInt();
+            short ticks = buf.readShort();
+            short shaderID = buf.readShort();
+            client.execute(() -> {
+                Entity entity = Minecraft.getInstance().level.getEntity(ID);
+                if(entity instanceof Player){
+                    PlayerComponent h = PLAYERCOMPONENTINSTANCE.get(entity);
+                    h.setVisualEffectTime(ticks);
+                    h.setEffectID(shaderID);
+                }
+
+                ResourceLocation resourceLocation = idTranslator(shaderID);
+                if(resourceLocation != null)
+                    ((EerieRendererAccessor) Minecraft.getInstance().gameRenderer).eerieInvokeLoadEffect(resourceLocation);
+                else{
+                    Minecraft.getInstance().gameRenderer.shutdownEffect();
+                }
+            });
+        });
+
+
         ClientPlayNetworking.registerGlobalReceiver(new ResourceLocation("eeriehauntings:configupdate"), (client, handler, buf, responseSender) -> {
             chalkDaysProtected = buf.readInt();
             soulBallChance = buf.readFloat();
@@ -85,5 +111,14 @@ public class ClientInitializer implements ClientModInitializer {
             easyModeEnabled = buf.readBoolean();
         });
 
+    }
+
+    public static ResourceLocation idTranslator(int shaderID){
+        switch (shaderID){
+            default -> {return null;}
+            case 1 -> {return new ResourceLocation("shaders/post/flip.json");}
+            case 2 -> {return new ResourceLocation("shaders/post/blobs.json");}
+            case 3 -> {return new ResourceLocation("shaders/post/desaturate.json");}
+        }
     }
 }
