@@ -6,7 +6,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.GameProfileArgument;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 
 import java.util.Collection;
@@ -33,7 +33,7 @@ public class ForceHauntCommand {
                     h.setGhostType(source.getLevel().getRandom().nextInt(3)+1);
                 }
         }
-        source.sendSuccess(new TranslatableComponent("haunted.eeriehauntings.success"), false);
+        source.sendSuccess(Component.translatable("haunted.eeriehauntings.success"), false);
         return 0;
     }
 }

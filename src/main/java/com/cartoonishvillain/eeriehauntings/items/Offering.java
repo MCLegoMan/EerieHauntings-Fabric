@@ -1,12 +1,10 @@
 package com.cartoonishvillain.eeriehauntings.items;
 
-import com.cartoonishvillain.eeriehauntings.EerieHauntings;
 import com.cartoonishvillain.eeriehauntings.client.ClientInitializer;
 import com.cartoonishvillain.eeriehauntings.components.HauntedWorker;
 import com.cartoonishvillain.eeriehauntings.components.PlayerComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -39,9 +37,9 @@ public class Offering extends Item {
                         HauntedWorker.boonExpelGhost((ServerPlayer) p_41433_);
                     } else if(h.getIsHaunted() && h.getAnger()) {
                         p_41433_.getMainHandItem().shrink(1);
-                        p_41433_.displayClientMessage(new TranslatableComponent("boon.eeriehauntings.deny").withStyle(ChatFormatting.RED), false);
+                        p_41433_.displayClientMessage(Component.translatable("boon.eeriehauntings.deny").withStyle(ChatFormatting.RED), false);
                     } else if(!h.getIsHaunted()){
-                        p_41433_.displayClientMessage(new TranslatableComponent("boon.eeriehauntings.wasted").withStyle(ChatFormatting.RED), false);
+                        p_41433_.displayClientMessage(Component.translatable("boon.eeriehauntings.wasted").withStyle(ChatFormatting.RED), false);
                     }
             }
         }
@@ -53,11 +51,11 @@ public class Offering extends Item {
         super.appendHoverText(p_41421_, p_41422_, p_41423_, p_41424_);
         if(p_41422_ != null && p_41422_.isClientSide) {
             if (ClientInitializer.boonEnabled) {
-                p_41423_.add(new TranslatableComponent("info.eeriehauntings.offering").withStyle(ChatFormatting.GOLD));
-                p_41423_.add(new TranslatableComponent("info.eeriehauntings.offering2").withStyle(ChatFormatting.GOLD));
+                p_41423_.add(Component.translatable("info.eeriehauntings.offering").withStyle(ChatFormatting.GOLD));
+                p_41423_.add(Component.translatable("info.eeriehauntings.offering2").withStyle(ChatFormatting.GOLD));
             } else {
-                p_41423_.add(new TranslatableComponent("info.eeriehauntings.offeringdisabled").withStyle(ChatFormatting.GRAY));
-                p_41423_.add(new TranslatableComponent("info.eeriehauntings.offeringdisabled2").withStyle(ChatFormatting.GRAY));
+                p_41423_.add(Component.translatable("info.eeriehauntings.offeringdisabled").withStyle(ChatFormatting.GRAY));
+                p_41423_.add(Component.translatable("info.eeriehauntings.offeringdisabled2").withStyle(ChatFormatting.GRAY));
             }
         }
     }

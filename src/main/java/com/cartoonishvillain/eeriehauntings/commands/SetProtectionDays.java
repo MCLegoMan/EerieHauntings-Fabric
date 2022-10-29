@@ -7,7 +7,7 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.GameProfileArgument;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 
 import java.util.Collection;
@@ -33,9 +33,9 @@ public class SetProtectionDays {
                 h.setProtectedDays(days);
         }
         if(days > 0) {
-            source.sendSuccess(new TranslatableComponent("protected.eeriehauntings.success", days), false);
+            source.sendSuccess(Component.translatable("protected.eeriehauntings.success", days), false);
         }else {
-            source.sendSuccess(new TranslatableComponent("protected.eeriehauntings.removed"), false);
+            source.sendSuccess(Component.translatable("protected.eeriehauntings.removed"), false);
         }
         return 0;
     }

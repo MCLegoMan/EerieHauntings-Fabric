@@ -5,7 +5,6 @@ import com.cartoonishvillain.eeriehauntings.client.ClientInitializer;
 import com.cartoonishvillain.eeriehauntings.components.PlayerComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -31,11 +30,11 @@ public class CalciteChalk extends Item {
             PlayerComponent h = PLAYERCOMPONENTINSTANCE.get(p_41433_);
                 if (!h.getIsHaunted()) {
                     h.setProtectedDays(EerieHauntings.serverConfig.config.chalkDurationInDays);
-                    p_41433_.displayClientMessage(new TranslatableComponent("info.eeriehauntings.activatechalk", EerieHauntings.serverConfig.config.chalkDurationInDays), false);
+                    p_41433_.displayClientMessage(Component.translatable("info.eeriehauntings.activatechalk", EerieHauntings.serverConfig.config.chalkDurationInDays), false);
                     p_41433_.getCooldowns().addCooldown(this, 100);
                     p_41433_.getItemInHand(p_41434_).shrink(1);
                 } else {
-                    p_41433_.displayClientMessage(new TranslatableComponent("info.eeriehauntings.failactivatechalk"), false);
+                    p_41433_.displayClientMessage(Component.translatable("info.eeriehauntings.failactivatechalk"), false);
                     p_41433_.getCooldowns().addCooldown(this, 100);
                 }
         }
@@ -46,7 +45,7 @@ public class CalciteChalk extends Item {
     public void appendHoverText(ItemStack p_41421_, @Nullable Level p_41422_, List<Component> p_41423_, TooltipFlag p_41424_) {
         super.appendHoverText(p_41421_, p_41422_, p_41423_, p_41424_);
         if(p_41422_ != null && p_41422_.isClientSide) {
-            p_41423_.add(new TranslatableComponent("info.eeriehauntings.calciteexplain", ClientInitializer.chalkDaysProtected).withStyle(ChatFormatting.GOLD));
+            p_41423_.add(Component.translatable("info.eeriehauntings.calciteexplain", ClientInitializer.chalkDaysProtected).withStyle(ChatFormatting.GOLD));
         }
     }
 }

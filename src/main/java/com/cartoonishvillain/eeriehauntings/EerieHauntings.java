@@ -8,14 +8,13 @@ import io.netty.buffer.Unpooled;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -47,7 +46,7 @@ public class EerieHauntings implements ModInitializer {
 		Register.init();
 		ServerTickEvents.END_SERVER_TICK.register(WorldTimeWatch.getInstance());
 
-		CommandRegistrationCallback.EVENT.register(((dispatcher, dedicated) -> {
+		CommandRegistrationCallback.EVENT.register(((dispatcher, dedicated, e) -> {
 			ForceHauntCommand.register(dispatcher);
 			HelpCommand.register(dispatcher);
 			RemoveHauntCommand.register(dispatcher);

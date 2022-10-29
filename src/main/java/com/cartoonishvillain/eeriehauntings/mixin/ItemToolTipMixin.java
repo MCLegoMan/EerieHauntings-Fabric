@@ -3,7 +3,6 @@ package com.cartoonishvillain.eeriehauntings.mixin;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -23,8 +22,8 @@ public class ItemToolTipMixin {
     @Inject(at = @At("TAIL"), method = "appendHoverText")
     public void EerieappendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> list, TooltipFlag tooltipFlag, CallbackInfo info) {
         if(itemStack.getItem().equals(UNEARTHLYSHARD)){
-            list.add(new TranslatableComponent("info.eeriehauntings.shard").withStyle(ChatFormatting.GOLD));
-            list.add(new TranslatableComponent("info.eeriehauntings.shardgain").withStyle(ChatFormatting.RED));
+            list.add(Component.translatable("info.eeriehauntings.shard").withStyle(ChatFormatting.GOLD));
+            list.add(Component.translatable("info.eeriehauntings.shardgain").withStyle(ChatFormatting.RED));
         }
     }
 }

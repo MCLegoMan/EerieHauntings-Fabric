@@ -6,7 +6,6 @@ import com.cartoonishvillain.eeriehauntings.components.HauntedWorker;
 import com.cartoonishvillain.eeriehauntings.components.PlayerComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -61,9 +60,9 @@ public class RedstoneDreamCatcher extends Item {
     public void appendHoverText(ItemStack p_41421_, @Nullable Level p_41422_, List<Component> p_41423_, TooltipFlag p_41424_) {
         if(p_41422_ != null && p_41422_.isClientSide) {
             if (!ClientInitializer.easyModeEnabled) {
-                p_41423_.add(new TranslatableComponent("tools.eeriehauntings.redstone").withStyle(ChatFormatting.GOLD));
+                p_41423_.add(Component.translatable("tools.eeriehauntings.redstone").withStyle(ChatFormatting.GOLD));
             } else {
-                p_41423_.add(new TranslatableComponent("tools.eeriehauntings.easyredstone").withStyle(ChatFormatting.GOLD));
+                p_41423_.add(Component.translatable("tools.eeriehauntings.easyredstone").withStyle(ChatFormatting.GOLD));
             }
         }
         super.appendHoverText(p_41421_, p_41422_, p_41423_, p_41424_);

@@ -5,14 +5,12 @@ import com.cartoonishvillain.eeriehauntings.Register;
 import com.cartoonishvillain.eeriehauntings.networking.LightClientSoundPacket;
 import com.cartoonishvillain.eeriehauntings.networking.MediumClientSoundPacket;
 import com.cartoonishvillain.eeriehauntings.networking.StrongClientSoundPacket;
-import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
@@ -77,11 +75,11 @@ public class HauntedWorker {
                 if (player.getMainHandItem().getItem().equals(Register.OLDRADIO) && h.getGhostType() != 1 && h.getGhostType() != 0) {
                     player.getCooldowns().addCooldown(Register.OLDRADIO, 100);
                     player.level.playSound(null, player.getOnPos(), Register.RADIOSOUND, SoundSource.MASTER, 1, 1);
-                    player.displayClientMessage(new TranslatableComponent("item.eeriehauntings.radio").withStyle(ChatFormatting.GOLD), true);
+                    player.displayClientMessage(Component.translatable("item.eeriehauntings.radio").withStyle(ChatFormatting.GOLD), true);
                 } else if (player.getMainHandItem().getItem().equals(Register.EMFCOUNTER) && h.getGhostType() != 2 && h.getGhostType() != 0) {
                     player.getCooldowns().addCooldown(Register.EMFCOUNTER, 100);
                     player.level.playSound(null, player.getOnPos(), Register.EMFCOUNTERSOUNDS, SoundSource.MASTER, 1, 1);
-                    player.displayClientMessage(new TranslatableComponent("item.eeriehauntings.emf").withStyle(ChatFormatting.GOLD), true);
+                    player.displayClientMessage(Component.translatable("item.eeriehauntings.emf").withStyle(ChatFormatting.GOLD), true);
                 }
 
             }
@@ -134,15 +132,15 @@ public class HauntedWorker {
             switch (random) {
                 case 0 -> {
                     player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 350, 0));
-//                player.displayClientMessage(new TranslatableComponent("ghost.moderateslow.alert"), false);
+//                player.displayClientMessage(Component.translatable()("ghost.moderateslow.alert"), false);
                 }
                 case 1 -> {
                     player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 350, 0));
-//                player.displayClientMessage(new TranslatableComponent("ghost.moderateblind.alert"), false);
+//                player.displayClientMessage(Component.translatable()("ghost.moderateblind.alert"), false);
                 }
                 case 2 -> {
                     player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 350, 0));
-//                player.displayClientMessage(new TranslatableComponent("ghost.moderateweakness.alert"), false);
+//                player.displayClientMessage(Component.translatable()("ghost.moderateweakness.alert"), false);
                 }
                 case 3 -> {
                     if (!leverWork(player)) {
@@ -176,7 +174,7 @@ public class HauntedWorker {
                         h.setEffectID(1);
                         h.setVisualEffectTime(200);
 
-//                player.displayClientMessage(new TranslatableComponent("ghost.stronglevitate.alert"), false);
+//                player.displayClientMessage(Component.translatable()("ghost.stronglevitate.alert"), false);
                 }
                 case 1 -> {
                     player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 350, 0));
@@ -184,7 +182,7 @@ public class HauntedWorker {
                         h.setEffectID(3);
                         h.setVisualEffectTime(350);
 
-//                player.displayClientMessage(new TranslatableComponent("ghost.strongconfusion.alert"), false);
+//                player.displayClientMessage(Component.translatable()("ghost.strongconfusion.alert"), false);
                 }
                 case 2 -> {
                     player.addEffect(new MobEffectInstance(MobEffects.HUNGER, 200, 0));
@@ -192,7 +190,7 @@ public class HauntedWorker {
                         h.setEffectID(2);
                         h.setVisualEffectTime(200);
 
-//                player.displayClientMessage(new TranslatableComponent("ghost.stronghunger.alert"), false);
+//                player.displayClientMessage(Component.translatable()("ghost.stronghunger.alert"), false);
                 }
                 case 3 -> {
                     if(!doorWork(player)){
@@ -236,30 +234,30 @@ public class HauntedWorker {
                 switch (rand) {
                     case 0 -> {
                         player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, Integer.MAX_VALUE,  EerieHauntings.serverConfig.config.boonPotencyAdder, false, false));
-                        player.displayClientMessage(new TranslatableComponent("boon.eeriehauntings.speed").withStyle(ChatFormatting.AQUA), false);
+                        player.displayClientMessage(Component.translatable("boon.eeriehauntings.speed").withStyle(ChatFormatting.AQUA), false);
                     }
                     case 1 -> {
                         player.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, Integer.MAX_VALUE, EerieHauntings.serverConfig.config.boonPotencyAdder, false, false));
-                        player.displayClientMessage(new TranslatableComponent("boon.eeriehauntings.haste").withStyle(ChatFormatting.YELLOW), false);
+                        player.displayClientMessage(Component.translatable("boon.eeriehauntings.haste").withStyle(ChatFormatting.YELLOW), false);
                     }
                     case 2 -> {
                         player.addEffect(new MobEffectInstance(MobEffects.JUMP, Integer.MAX_VALUE, 1 + EerieHauntings.serverConfig.config.boonPotencyAdder, false, false));
-                        player.displayClientMessage(new TranslatableComponent("boon.eeriehauntings.jump").withStyle(ChatFormatting.GREEN), false);
+                        player.displayClientMessage(Component.translatable("boon.eeriehauntings.jump").withStyle(ChatFormatting.GREEN), false);
                     }
                     case 3 -> {
                         player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, Integer.MAX_VALUE, EerieHauntings.serverConfig.config.boonPotencyAdder, false, false));
-                        player.displayClientMessage(new TranslatableComponent("boon.eeriehauntings.resistance").withStyle(ChatFormatting.RED), false);
+                        player.displayClientMessage(Component.translatable("boon.eeriehauntings.resistance").withStyle(ChatFormatting.RED), false);
                     }
                     case 4 -> {
                         player.addEffect(new MobEffectInstance(MobEffects.HEALTH_BOOST, Integer.MAX_VALUE, 1 + EerieHauntings.serverConfig.config.boonPotencyAdder, false, false));
-                        player.displayClientMessage(new TranslatableComponent("boon.eeriehauntings.life").withStyle(ChatFormatting.LIGHT_PURPLE), false);
+                        player.displayClientMessage(Component.translatable("boon.eeriehauntings.life").withStyle(ChatFormatting.LIGHT_PURPLE), false);
                     }
                     case 5 -> {
                         player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, Integer.MAX_VALUE, EerieHauntings.serverConfig.config.boonPotencyAdder, false, false));
-                        player.displayClientMessage(new TranslatableComponent("boon.eeriehauntings.strength").withStyle(ChatFormatting.DARK_RED), false);
+                        player.displayClientMessage(Component.translatable("boon.eeriehauntings.strength").withStyle(ChatFormatting.DARK_RED), false);
                     }
                 }
-            } else player.displayClientMessage(new TranslatableComponent("boon.eeriehauntings.disabled").withStyle(ChatFormatting.DARK_RED), false);
+            } else player.displayClientMessage(Component.translatable("boon.eeriehauntings.disabled").withStyle(ChatFormatting.DARK_RED), false);
         }
 
 
@@ -317,11 +315,6 @@ public class HauntedWorker {
             }
         }
         return worked;
-    }
-
-
-    private static void broadcast(MinecraftServer server, Component translationTextComponent){
-        server.getPlayerList().broadcastMessage(translationTextComponent, ChatType.CHAT, UUID.randomUUID());
     }
 
     private static boolean ValidPlayer(Player player){

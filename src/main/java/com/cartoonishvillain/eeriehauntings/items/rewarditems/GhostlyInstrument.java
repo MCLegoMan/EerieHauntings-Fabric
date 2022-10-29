@@ -4,7 +4,6 @@ import com.cartoonishvillain.eeriehauntings.EerieHauntings;
 import com.cartoonishvillain.eeriehauntings.Register;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -46,7 +45,7 @@ public class GhostlyInstrument extends Item {
                        p_41300_.broadcastBreakEvent(p_41434_);
                    } ); p_41433_.getCooldowns().addCooldown(this, 300);}
                    else p_41433_.getCooldowns().addCooldown(this, 200);
-                    break;
+                   break;
                 }
                 default: {
                     p_41433_.getCooldowns().addCooldown(this, 200);
@@ -88,13 +87,13 @@ public class GhostlyInstrument extends Item {
         String item = p_41421_.getItem().toString();
         switch (item){
             case "amplified_ghostly_instrument":{
-                p_41423_.add(new TranslatableComponent("amplifiedinstrument.eeriehauntings.infosound").withStyle(ChatFormatting.BLUE));
-                p_41423_.add(new TranslatableComponent("amplifiedinstrument.eeriehauntings.infocrouch").withStyle(ChatFormatting.RED));
-                p_41423_.add(new TranslatableComponent("amplifiedinstrument.eeriehauntings.infocrouch2").withStyle(ChatFormatting.RED));
+                p_41423_.add(Component.translatable("amplifiedinstrument.eeriehauntings.infosound").withStyle(ChatFormatting.BLUE));
+                p_41423_.add(Component.translatable("amplifiedinstrument.eeriehauntings.infocrouch").withStyle(ChatFormatting.RED));
+                p_41423_.add(Component.translatable("amplifiedinstrument.eeriehauntings.infocrouch2").withStyle(ChatFormatting.RED));
                 break;
             }
             default:{
-                p_41423_.add(new TranslatableComponent("instrument.eeriehauntings.infosound").withStyle(ChatFormatting.BLUE));
+                p_41423_.add(Component.translatable("instrument.eeriehauntings.infosound").withStyle(ChatFormatting.BLUE));
                 break;
             }
         }
