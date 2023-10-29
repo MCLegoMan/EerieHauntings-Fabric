@@ -50,7 +50,7 @@ public class ClientInitializer implements ClientModInitializer {
                     int xModifier = ((Player) entity).getRandom().nextInt(6 + 6) - 6;
                     int yModifier = ((Player) entity).getRandom().nextInt(6 + 6) - 6;
                     int zModifier = ((Player) entity).getRandom().nextInt(6 + 6) - 6;
-                    entity.level.playSound((Player) entity, entity.getX()+xModifier, entity.getY()+yModifier, entity.getZ()+zModifier, EerieHauntings.lowEndSounds.get(soundID), SoundSource.MASTER, 1.25f, randomPitch*1.2f);
+                    //entity.level.playSound((Player) entity, entity.getX()+xModifier, entity.getY()+yModifier, entity.getZ()+zModifier, EerieHauntings.lowEndSounds.get(soundID), SoundSource.MASTER, 1.25f, randomPitch*1.2f);
             }
 
         });
@@ -66,7 +66,7 @@ public class ClientInitializer implements ClientModInitializer {
                    int xModifier = ((Player) entity).getRandom().nextInt(3 + 3) - 3;
                    int yModifier = ((Player) entity).getRandom().nextInt(3 + 3) - 3;
                    int zModifier = ((Player) entity).getRandom().nextInt(3 + 3) - 3;
-                   entity.level.playSound((Player) entity, entity.getX()+xModifier, entity.getY()+yModifier, entity.getZ()+zModifier, Register.MEDIUMSTRENGTHSOUNDS, SoundSource.MASTER, 1.25f, randomPitch*1.15f);
+                   //entity.level.playSound((Player) entity, entity.getX()+xModifier, entity.getY()+yModifier, entity.getZ()+zModifier, Register.MEDIUMSTRENGTHSOUNDS, SoundSource.MASTER, 1.25f, randomPitch*1.15f);
                }
            });
         });
@@ -77,7 +77,7 @@ public class ClientInitializer implements ClientModInitializer {
                 Entity entity = Minecraft.getInstance().level.getEntity(ID);
                 if(entity instanceof Player){
                     float randomPitch =  ((Player) entity).getRandom().nextFloat();
-                    entity.level.playSound((Player) entity, entity.getX(), entity.getY(), entity.getZ(), Register.STRONGSTRENGTHSOUNDS, SoundSource.MASTER, 1.5f, randomPitch);
+                    //entity.level.playSound((Player) entity, entity.getX(), entity.getY(), entity.getZ(), Register.STRONGSTRENGTHSOUNDS, SoundSource.MASTER, 1.5f, randomPitch);
                 }
             });
         });
@@ -95,8 +95,7 @@ public class ClientInitializer implements ClientModInitializer {
                 }
 
                 ResourceLocation resourceLocation = idTranslator(shaderID);
-                if(resourceLocation != null)
-                    ((EerieRendererAccessor) Minecraft.getInstance().gameRenderer).eerieInvokeLoadEffect(resourceLocation);
+                if(resourceLocation != null) ((EerieRendererAccessor) Minecraft.getInstance().gameRenderer).eerieInvokeLoadEffect(resourceLocation);
                 else{
                     Minecraft.getInstance().gameRenderer.shutdownEffect();
                 }
